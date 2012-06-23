@@ -17,7 +17,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-    Binary_log binlog(system::create_transport("mysql://root:smokie1@10.13.10.49:3306"));
+    Binary_log binlog(system::create_transport("mysql://root:root@10.13.10.49:3306"));
     if (binlog.connect())
     {
         fprintf(stderr, "Can't connect to the master.\n");
