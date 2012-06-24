@@ -1,15 +1,16 @@
 /* 
- * File:   main.cpp
+ * Starts binary log event listener.
+ * 
  * Author: vkandy
- *
- * Created on June 22, 2012, 10:08 PM
  */
 
 #include <cstdlib>
 #include <iostream>
 #include "binlog_api.h"
 
-using namespace std;
+class Query_handler : public Content_handler
+{
+};
 
 /*
  * 
@@ -17,17 +18,35 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-    Binary_log binlog(system::create_transport("mysql://root:root@10.13.10.49:3306"));
+    mysql::Binary_log binlog(mysql::system::create_transport("mysql://root:root@127.0.0.1:3306"));
     if (binlog.connect())
     {
         fprintf(stderr, "Can't connect to the master.\n");
         return (EXIT_FAILURE);
     }
 
-    if (binlog.set_position(4) != ERR_OK)
+    fprintf(stdout, "Connected to the master.\n");
+
+    mysql::Binary_log_event *event;
+    mysql::Query_event *qe;
+
+    while (true)
     {
-        fprintf(stderr, "Can't reposition the binary log reader.\n");
-        return (EXIT_FAILURE);
+        binlog.wait_for_next_event(&event);
+        // cout << " at " << event->header()->marker << " event type " << event->get_event_type() << endl;
+
+        switch (event->header()->type_code)
+        {
+        case mysql::QUERY_EVENT:
+            qe = static_cast<mysql::Query_event*> (event);
+            std::cout << qe->query << std::endl;
+            break;
+
+        default:
+            std::cout << " at " << event->header()->marker << " event type " << event->get_event_type() << std::endl;
+        }
+
+        delete event;
     }
 
     return EXIT_SUCCESS;
