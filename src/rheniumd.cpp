@@ -1,23 +1,21 @@
 /* 
  * Starts binary log event listener.
  * 
+ * File:   rheniumd.cpp
  * Author: vkandy
  */
 
 #include <cstdlib>
 #include <iostream>
 #include "binlog_api.h"
+#include "Options.h"
 
 class Query_handler : public Content_handler
 {
 };
 
-/*
- * 
- */
-int main(int argc, char** argv)
+int handle_events()
 {
-
     mysql::Binary_log binlog(mysql::system::create_transport("mysql://root:root@127.0.0.1:3306"));
     if (binlog.connect())
     {
@@ -48,6 +46,28 @@ int main(int argc, char** argv)
 
         delete event;
     }
+
+}
+
+/*
+ * Starts the server.
+ */
+int main(int argc, char** argv)
+{
+    Options options;
+
+    if (argc <= 1)
+    {
+        std::cerr << "Try --help for usage" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    options.parse(argc, argv);
+
+    std::cout << "Host:" << options.get_host() << std::endl;
+    std::cout << "Port:" << options.get_port() << std::endl;
+    std::cout << "Username:" << options.get_username() << std::endl;
+    std::cout << "Password:" << options.get_password() << std::endl;
 
     return EXIT_SUCCESS;
 }
