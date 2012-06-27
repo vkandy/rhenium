@@ -27,6 +27,8 @@ Query_event_handler::~Query_event_handler()
 mysql::Binary_log_event *Query_event_handler::process_event(mysql::Query_event *event)
 {
     std::cout << event->query << std::endl;
+    
+    
     delete event;
     return 0;
 }

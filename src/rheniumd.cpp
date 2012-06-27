@@ -16,16 +16,13 @@
  */
 int main(int argc, char** argv)
 {
-    Options options;
-    Query_event_handler qeh;
-    mysql::Binary_log_event *event;
-
     if (argc <= 1)
     {
         std::cerr << "Try --help for usage" << std::endl;
         exit(EXIT_FAILURE);
     }
 
+    Options options;
     options.parse(argc, argv);
 
     std::cout << "Host:" << options.get_host() << std::endl;
@@ -34,6 +31,8 @@ int main(int argc, char** argv)
     std::cout << "Password:" << options.get_password() << std::endl;
 
     mysql::Binary_log binlog(mysql::system::create_transport("mysql://root:root@127.0.0.1:3306"));
+
+    Query_event_handler qeh;
     binlog.content_handler_pipeline()->push_back(&qeh);
 
     if (binlog.connect())
@@ -44,6 +43,7 @@ int main(int argc, char** argv)
 
     while (true)
     {
+        mysql::Binary_log_event *event;
         binlog.wait_for_next_event(&event);
         delete event;
     }

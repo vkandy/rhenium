@@ -4,7 +4,6 @@
  *
  * Created on June 26, 2012, 8:29 PM
  */
-//#include "binlog_event.h"
 #include "basic_content_handler.h"
 
 #ifndef QUERY_EVENT_HANDLER_H
@@ -23,4 +22,3 @@ private:
 };
 
 #endif	/* QUERY_EVENT_HANDLER_H */
-
