@@ -11,7 +11,8 @@
 #ifndef OPTIONS_H
 #define	OPTIONS_H
 
-class Options {
+class Options
+{
 public:
     Options();
     Options(const Options& orig);
@@ -19,19 +20,23 @@ public:
 
     void parse(int argc, char** argv);
 
-    Glib::ustring get_host() {
+    Glib::ustring get_host()
+    {
         return host;
     }
 
-    int get_port() {
+    int get_port()
+    {
         return port;
     }
 
-    Glib::ustring get_username() {
+    Glib::ustring get_username()
+    {
         return username;
     }
 
-    Glib::ustring get_password() {
+    Glib::ustring get_password()
+    {
         return password;
     }
 
