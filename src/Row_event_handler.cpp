@@ -27,10 +27,19 @@ Row_event_handler::~Row_event_handler()
  * @param event
  * @return 
  */
-mysql::Binary_log_event *Row_event_handler::process_event(mysql::Row_event *rev)
+mysql::Binary_log_event *Row_event_handler::process_event(mysql::Row_event *event)
 {
-    boost::uint64_t table_id = rev->table_id;
+    boost::uint64_t table_id = event->table_id;
+    std::vector<uint8_t> row = event->row;
 
-    delete rev;
+    switch (event->header()->type_code)
+    {
+    case mysql::WRITE_ROWS_EVENT:
+    case mysql::UPDATE_ROWS_EVENT:
+    case mysql::DELETE_ROWS_EVENT:
+        ;
+    }
+
+    delete event;
     return 0;
 }
