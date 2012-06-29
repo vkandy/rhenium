@@ -4,19 +4,27 @@
  *
  * Created on June 26, 2012, 8:34 PM
  */
+#include <cstdlib>
+#include <iostream>
 #include "basic_content_handler.h"
+#include "Base_event_handler.h"
+#include "binlog_api.h"
 
 #ifndef ROW_EVENT_HANDLER_H
 #define	ROW_EVENT_HANDLER_H
 
-class Row_event_handler
+class Row_event_handler : public Base_event_handler
 {
 public:
     Row_event_handler();
     Row_event_handler(const Row_event_handler& orig);
     virtual ~Row_event_handler();
-    
+
     mysql::Binary_log_event *process_event(mysql::Row_event *re);
+    void on_insert(std::string db_name, std::string table_name, mysql::Row_of_fields &fields);    
+    void on_delete(std::string db_name, std::string table_name, mysql::Row_of_fields &fields);
+    void on_update(std::string db_name, std::string table_name, mysql::Row_of_fields &old_fields, mysql::Row_of_fields &new_fields);
+
 private:
 
 };
