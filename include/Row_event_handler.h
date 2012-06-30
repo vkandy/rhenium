@@ -6,6 +6,7 @@
  */
 #include <cstdlib>
 #include <iostream>
+#include <glibmm-2.4/glibmm/ustring.h>
 #include "basic_content_handler.h"
 #include "Base_event_handler.h"
 #include "binlog_api.h"
@@ -21,9 +22,9 @@ public:
     virtual ~Row_event_handler();
 
     mysql::Binary_log_event *process_event(mysql::Row_event *re);
-    void on_insert(std::string db_name, std::string table_name, mysql::Row_of_fields &fields);    
-    void on_delete(std::string db_name, std::string table_name, mysql::Row_of_fields &fields);
-    void on_update(std::string db_name, std::string table_name, mysql::Row_of_fields &old_fields, mysql::Row_of_fields &new_fields);
+    void on_insert(Glib::ustring db_name, Glib::ustring table_name, mysql::Row_of_fields &fields);
+    void on_delete(Glib::ustring db_name, Glib::ustring table_name, mysql::Row_of_fields &fields);
+    void on_update(Glib::ustring db_name, Glib::ustring table_name, mysql::Row_of_fields &old_fields, mysql::Row_of_fields &new_fields);
 
 private:
 

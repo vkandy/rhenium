@@ -11,6 +11,7 @@
 #include "Options.h"
 #include "Query_event_handler.h"
 #include "Table_map_event_handler.h"
+#include "Row_event_handler.h"
 
 /*
  * Starts the server.
@@ -35,8 +36,11 @@ int main(int argc, char** argv)
 
     Table_map_event_handler tmeh;
     Query_event_handler qeh;
+    Row_event_handler reh;
+    
     binlog.content_handler_pipeline()->push_back(&tmeh);
     binlog.content_handler_pipeline()->push_back(&qeh);
+    binlog.content_handler_pipeline()->push_back(&reh);
 
     if (binlog.connect())
     {

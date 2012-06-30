@@ -20,11 +20,6 @@ Base_event_handler::Base_event_handler(const Base_event_handler& orig)
 
 Base_event_handler::~Base_event_handler()
 {
-    event_map::iterator iterator;
-    for (iterator = table_map.begin(); iterator != table_map.end(); ++iterator)
-    {
-        delete iterator->second;
-    }
 }
 
 /**
