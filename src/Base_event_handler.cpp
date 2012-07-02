@@ -4,11 +4,8 @@
  * 
  * Created on June 28, 2012, 8:54 PM
  */
-
 #include "Base_event_handler.h"
 #include "binlog_event.h"
-
-event_map Base_event_handler::table_map;
 
 Base_event_handler::Base_event_handler()
 {

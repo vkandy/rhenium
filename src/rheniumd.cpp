@@ -35,12 +35,12 @@ int main(int argc, char** argv)
     mysql::Binary_log binlog(mysql::system::create_transport("mysql://root:root@127.0.0.1:3306"));
 
     Table_map_event_handler tmeh;
+    Row_event_handler reh(&tmeh);
     Query_event_handler qeh;
-    Row_event_handler reh;
-    
+
     binlog.content_handler_pipeline()->push_back(&tmeh);
-    binlog.content_handler_pipeline()->push_back(&qeh);
     binlog.content_handler_pipeline()->push_back(&reh);
+    binlog.content_handler_pipeline()->push_back(&qeh);
 
     if (binlog.connect())
     {

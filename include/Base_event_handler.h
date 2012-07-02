@@ -9,9 +9,6 @@
 #ifndef BASE_EVENT_HANDLER_H
 #define	BASE_EVENT_HANDLER_H
 
-typedef std::map<boost::uint64_t, mysql::Table_map_event *> event_map;
-typedef std::pair<boost::uint64_t, mysql::Table_map_event *> event_pair;
-
 class Base_event_handler : public mysql::Content_handler
 {
 public:
@@ -20,9 +17,6 @@ public:
     virtual ~Base_event_handler();
 
     mysql::Binary_log_event *process_event(mysql::Binary_log_event *event);
-
-protected:
-    static event_map table_map;
 
 private:
 
