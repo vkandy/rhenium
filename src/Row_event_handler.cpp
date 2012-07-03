@@ -44,7 +44,7 @@ mysql::Binary_log_event *Row_event_handler::process_event(mysql::Row_event *row_
 
     if (pair == table_map.end())
     {
-        std::cout << "Table id " << table_id << " was not registered by any preceding table map event" << std::endl;
+        std::cout << "Table id " << table_id << " was not registered" << std::endl;
         return row_event;
     }
 

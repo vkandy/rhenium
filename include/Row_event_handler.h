@@ -6,7 +6,7 @@
  */
 #include <cstdlib>
 #include <iostream>
-#include <glibmm-2.4/glibmm/ustring.h>
+#include <glibmm.h>
 #include "basic_content_handler.h"
 #include "Base_event_handler.h"
 #include "Table_map_event_handler.h"
