@@ -8,11 +8,13 @@
 #include <cstdlib>
 #include <iostream>
 #include <glibmm.h>
+#include <zmq.hpp>
 #include "binlog_api.h"
 #include "Options.h"
 #include "Query_event_handler.h"
 #include "Table_map_event_handler.h"
 #include "Row_event_handler.h"
+#include "Rhenium_utils.h"
 
 /*
  * Starts the server.
@@ -49,6 +51,30 @@ int main(int argc, char** argv)
     {
         std::cerr << "Can't connect to the master" << std::endl;
         return (EXIT_FAILURE);
+    }
+
+    zmq::context_t context(1);
+    zmq::socket_t sync(context, ZMQ_PULL);
+    sync.bind("tcp://*:5564");
+
+    zmq::socket_t publisher(context, ZMQ_PUB);
+
+    uint64_t hwm = 1;
+    publisher.setsockopt(ZMQ_HWM, &hwm, sizeof (hwm));
+
+    uint64_t swap = 25000000;
+    publisher.setsockopt(ZMQ_SWAP, &swap, sizeof (swap));
+    publisher.bind("tcp://*:5565");
+
+    Rhenium_utils::s_recv(sync);
+
+    int update_nbr;
+    for (update_nbr = 0; update_nbr < 10; update_nbr++)
+    {
+        std::ostringstream oss;
+        oss << "Update " << update_nbr;
+        Rhenium_utils::s_send(publisher, oss.str());
+        sleep(1);
     }
 
     while (true)
