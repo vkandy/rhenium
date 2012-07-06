@@ -18,19 +18,19 @@ public:
     Rhenium_utils(const Rhenium_utils& orig);
     virtual ~Rhenium_utils();
 
-    static bool s_send(zmq::socket_t &socket, const std::string &string)
+    static bool s_send(zmq::socket_t *socket, const std::string &string)
     {
         zmq::message_t message(string.size());
         memcpy(message.data(), string.data(), string.size());
 
-        bool rc = socket.send(message);
+        bool rc = socket->send(message);
         return (rc);
     }
 
-    static std::string s_recv(zmq::socket_t &socket)
+    static std::string s_recv(zmq::socket_t *socket)
     {
         zmq::message_t message;
-        socket.recv(&message);
+        socket->recv(&message);
 
         return std::string(static_cast<char*> (message.data()), message.size());
     }

@@ -4,6 +4,7 @@
  *
  * Created on June 26, 2012, 8:29 PM
  */
+#include <zmq.hpp>
 #include "basic_content_handler.h"
 #include "Base_event_handler.h"
 
@@ -12,14 +13,13 @@
 
 class Query_event_handler : public Base_event_handler
 {
-public:
-    Query_event_handler();
-    Query_event_handler(const Query_event_handler& orig);
+public:    
+    Query_event_handler(zmq::socket_t *socket);
     virtual ~Query_event_handler();
 
     mysql::Binary_log_event *process_event(mysql::Query_event *ev);
-private:
-
+protected:
+    zmq::socket_t *publisher;
 };
 
 #endif	/* QUERY_EVENT_HANDLER_H */

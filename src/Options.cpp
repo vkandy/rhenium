@@ -52,6 +52,12 @@ void Options::parse(int argc, char** argv)
         option_password.set_description("Password to use when connecting to server.");
         option_group.add_entry(option_password, Options::password);
 
+        Glib::OptionEntry option_position;
+        option_position.set_short_name('j');
+        option_position.set_long_name("start-position");
+        option_position.set_description("Start reading the binary log at the first event having a position equal to or greater than the argument");
+        option_group.add_entry(option_position, Options::start_position);
+
         option_context.set_help_enabled(true);
         option_context.set_ignore_unknown_options(false);
         option_context.set_main_group(option_group);

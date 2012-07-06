@@ -40,11 +40,17 @@ public:
         return password;
     }
 
+    int get_start_position()
+    {
+        return start_position;
+    }
+
 private:
     Glib::ustring host;
     int port;
     Glib::ustring username;
     Glib::ustring password;
+    int start_position;
 };
 
 #endif	/* OPTIONS_H */

@@ -29,7 +29,6 @@ mysql::Binary_log_event *Base_event_handler::process_event(mysql::Binary_log_eve
 {
     std::cout << event->header()->type_code << std::endl;
 
-    delete event;
-    return 0;
+    return event;
 }
 
